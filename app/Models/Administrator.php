@@ -6,34 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-
-class User extends Authenticatable
+class Administrator extends Authenticatable
 {
     use HasFactory;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
         'email',
-        'email_verified_at',
-        'del_flg',
-        'saler_id'
     ];
 
     protected $hidden = [
         'password',
-        'remember_token'
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'first_name' => 'string',
-        'last_name' => 'string',
+        'name' => 'string',
         'email' => 'string',
-        'email_verified_at' => 'datetime',
         'password' => 'string',
-        'remember_token' => 'string',
-        'del_flg' => 'boolean',
-        'saler_id' => 'integer',
     ];
+
 }
