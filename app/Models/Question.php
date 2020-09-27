@@ -19,4 +19,9 @@ class Question extends Model
         'content' => 'string',
         'exercise_id' => 'integer',
     ];
+
+    public function exercise()
+    {
+        return $this->belongsTo('App\Models\Exercise');
+    }
 }

@@ -33,4 +33,9 @@ class Saler extends Authenticatable
         'email' => 'string',
         'password' => 'string',
     ];
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }

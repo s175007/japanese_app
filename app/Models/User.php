@@ -36,4 +36,14 @@ class User extends Authenticatable
         'del_flg' => 'boolean',
         'saler_id' => 'integer',
     ];
+
+    public function histories()
+    {
+        return $this->hasMany('App\Models\History');
+    }
+
+    public function saler()
+    {
+        return $this->belongsTo('App\Models\Saler');
+    }
 }

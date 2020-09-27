@@ -21,4 +21,14 @@ class History extends Model
         'user_id' => 'integer',
         'sel_content' => 'string',
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo('App\Models\Lesson');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

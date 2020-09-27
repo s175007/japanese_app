@@ -23,4 +23,14 @@ class Vocabulary extends Model
         'mean' => 'string',
         'lesson_id' => 'integer',
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo('App\Models\Lesson');
+    }
+
+    public function vcbExamples()
+    {
+        return $this->hasMany('App\Models\VcbExample');
+    }
 }

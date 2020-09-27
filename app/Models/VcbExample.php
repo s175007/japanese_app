@@ -19,4 +19,9 @@ class VcbExample extends Model
         'vocabulary_id' => 'integer',
         'examples' => 'string',
     ];
+
+    public function vocabulary()
+    {
+        return $this->belongsTo('App\Models\Vocabulary');
+    }
 }

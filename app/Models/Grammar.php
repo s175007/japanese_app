@@ -23,4 +23,14 @@ class Grammar extends Model
         'using' => 'string',
         'lesson_id' => 'integer',
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo('App\Models\Lesson');
+    }
+
+    public function GrmExamples()
+    {
+        return $this->hasMany('App\Models\GrmExample');
+    }
 }

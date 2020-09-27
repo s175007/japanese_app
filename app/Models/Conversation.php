@@ -25,4 +25,9 @@ class Conversation extends Model
         'order_no' => 'integer',
         'lesson_id' => 'integer',
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo('App\Models\Lesson');
+    }
 }

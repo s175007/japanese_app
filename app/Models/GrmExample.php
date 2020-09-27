@@ -21,4 +21,9 @@ class GrmExample extends Model
         'vietnamese' => 'string',
         'grammar_id' => 'integer',
     ];
+
+    public function grammar()
+    {
+        return $this->belongsTo('App\Models\Grammar');
+    }
 }

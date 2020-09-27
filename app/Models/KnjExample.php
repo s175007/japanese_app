@@ -23,4 +23,9 @@ class KnjExample extends Model
         'mean' => 'string',
         'kanji_id' => 'integer',
     ];
+
+    public function kanji()
+    {
+        return $this->belongsTo('App\Models\Kanji');
+    }
 }

@@ -21,4 +21,14 @@ class Exercise extends Model
         'description' => 'string',
         'lesson_id' => 'integer',
     ];
+
+    public function lesson()
+    {
+        return $this->belongsTo('App\Models\Lesson');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Models\Question');
+    }
 }
