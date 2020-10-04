@@ -11,9 +11,7 @@
             margin-top: 20px;
             background: #76b852;
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-            border-radius: 5px;
             color: #fff;
-            /* background: #000000; */
         }
 
         .login__content {
@@ -40,9 +38,14 @@
             <div class="login__content">
                 @if (\Session::has('success'))
                     <div class="alert alert-success">
-                            <p>{!! \Session::get('success') !!}</p>
+                        <p>{!! \Session::get('success') !!}</p>
                     </div>
                 @endif
+                @error('logout')
+                <div class="alert alert-success">
+                    <p class="text-danger">{{ $message }}</p>
+                </div>
+                @enderror
                 <div class="form-group">
                     <label for="email">Tài khoản</label>
                     @error('email')

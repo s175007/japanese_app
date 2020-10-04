@@ -133,6 +133,14 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'name' => [
+            'required' => ':attribute không được để trống',
+            'string' => ':attribute nhập sai',
+        ],
+        'icon' => [
+            'required' => ':attribute không được để trống',
+            'file' => ':attribute không đúng',
+        ],
         'email' => [
             'required' => ':attribute không được để trống',
             'email' => ':attribute nhập sai',
@@ -142,6 +150,7 @@ return [
             'min' => ':attribute phải ít nhất :min kí tự',
             'max' => ':attribute phải ít hơn :max kí tự',
         ],
+
     ],
 
     /*
@@ -156,6 +165,8 @@ return [
     */
 
     'attributes' => [
+        'name' => 'Tên',
+        'icon' => 'Icon',
         'email' => 'email',
         'password' => 'mật khẩu',
     ],

@@ -22,15 +22,22 @@ class AdminController extends Controller
 
         if (Auth::guard('admins')->attempt($credentials)) {
             // Authentication passed...
-            return "Đăng nhập thành công!";
+            return Redirect::route('admin.dashboard');
         }
+
+        return Redirect::route('admin.login')->withErrors(['logout' => 'Đăng nhập k thành công!!']);
+
     }
 
-    function logout(Request $request){
+    function logout(){
         if(Auth::guard('admins')->check()){
             Auth::guard('admins')->logout();
-            return redirect()->back()->with('success', 'Đăng xuất thành công!!'); 
+            return Redirect::route('admin.login')->with('success', 'Đăng xuất thành công!!'); 
         }
         return redirect()->route('home')->withErrors(['logout'=>'Đăng xuất k thành công!!']);
+    }
+
+    function dashboard(){
+        return view('admins.dashboard');
     }
 }

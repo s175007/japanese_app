@@ -26,14 +26,24 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li> --}}
-            <li class="nav-item active ">
-                <a class="nav-link" href="{{ route('admin.login') }}">Đăng nhập <span
-                        class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active ">
-                <a class="nav-link" href="{{ route('admin.logout') }}">Đăng xuất <span
-                        class="sr-only">(current)</span></a>
-            </li>
+            @auth('admins')
+                <li class="nav-item active ">
+                    <a class="nav-link" href="{{ route('admin.logout') }}">Đăng xuất <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            @endauth
+
+            @unless (Request::is('admin/login'))
+                @guest('admins')
+                    <li class="nav-item active ">
+                        <a class="nav-link" href="{{ route('admin.login') }}">Đăng nhập <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                @endguest
+            @endunless
+
+
+
             {{-- <li class="nav-item active">
                 <a class="nav-link" href="#">Đăng ký <span class="sr-only">(current)</span></a>
             </li> --}}

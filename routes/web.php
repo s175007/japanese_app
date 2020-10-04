@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,11 @@ Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login
 
 Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-Route::get('test-md', function(){
-    return "Kiểm tra thành công!";
-} )->middleware('admin');
 
+Route::prefix('admin')->name('admin.')->group(function () {
 
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('categories', CategoryController::class);
+
+});

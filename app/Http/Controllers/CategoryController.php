@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -14,7 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        // return $categories;
+        return view('admins.categories.index')->with('categories', $categories);
     }
 
     /**
@@ -24,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.categories.create');
     }
 
     /**
@@ -35,7 +41,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), Category::$create_rule)->validate();
+        
+        $category = new Category();
+        $category->name = $request->name;
+        $icon_name = Storage::disk('public')->put('icons', $request->file('icon'));
+        $category->icon = $icon_name;
+        $category->save();
+
+        return Redirect::route('admin.categories.index')->with('success','Tạo thành công');
     }
 
     /**
