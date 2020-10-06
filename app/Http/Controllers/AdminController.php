@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Redirect;
 class AdminController extends Controller
 {
     function returnViewLogin(){
+        if(Auth::guard('admins')->check()){
+            return Redirect::route('admin.dashboard');
+        }
         return view('admins.login');
     }
 

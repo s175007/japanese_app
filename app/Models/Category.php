@@ -25,6 +25,11 @@ class Category extends Model
         'icon' => 'required|file',
     ];
 
+    public static $update_rule = [
+        'name' => 'required|string',
+    ];
+
+
     public function books()
     {
         return $this->hasMany('App\Models\Book');

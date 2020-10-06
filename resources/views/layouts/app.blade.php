@@ -17,7 +17,10 @@
         body {
             font-family: 'Nunito';
         }
+
     </style>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('icons/fontawesome-free-5.15.0-web/css/all.css') }}">
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

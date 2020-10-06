@@ -58,9 +58,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return view('admins.categories.show')->with('category' , $category);
     }
 
     /**
@@ -69,9 +70,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('admins.categories.edit')->with('category', $category);
     }
 
     /**
@@ -81,9 +83,25 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        if($request->hasFile('icon')){
+            Validator::make($request->all(), Category::$create_rule)->validate();
+        }else{
+            Validator::make($request->all(), Category::$update_rule)->validate();
+        }
+
+        $category = Category::find($id);
+        if(!empty($category)){
+            $category->name = $request->name;
+            if($request->hasFile('icon')){
+                $icon_name = Storage::disk('public')->put('icons', $request->file('icon'));
+                $category->icon = $icon_name;
+            }
+            // return $category;
+            $category->save();
+        }
+        return Redirect::route('admin.categories.index')->with('success', 'Cập nhật thành công');
     }
 
     /**
@@ -92,8 +110,14 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+        if(!empty($category)){
+            $category->delete();
+            return Redirect::back()->with('success','Xoá thành công');
+        }
+        return Redirect::back()->with('success', 'Xoá thất bại');
     }
 }

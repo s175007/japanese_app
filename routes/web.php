@@ -30,7 +30,7 @@ Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login
 Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
 
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
