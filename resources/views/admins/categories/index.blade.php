@@ -32,12 +32,18 @@
     <div class="add__button">
         <a href="{{ route('admin.categories.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
             category</a>
-
-        <div class="alert alert-success" role="alert">
-            @if (session('success'))
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
                 {{ session('success') }}
-            @endif
-        </div>
+            </div>
+        @endif
+
+
+        @if (session('fail'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('fail') }}
+            </div>
+        @endif
     </div>
     <table class="table">
         <thead>
@@ -56,7 +62,7 @@
                     <td><img src="{{ Storage::url($category->icon) }}" class="img-fluid" alt="không tồn tại"></td>
                     <td>
                         <div class="row">
-                            <form method="POST"  action="{{ route('admin.categories.destroy', ['category' => $category]) }}">
+                            <form method="POST" action="{{ route('admin.categories.destroy', ['category' => $category]) }}">
 
                                 <a href="{{ route('admin.categories.show', $category->id) }}" title="show">
                                     <i class="fas fa-eye fa-lg" style="color: #A9A9A9"></i>

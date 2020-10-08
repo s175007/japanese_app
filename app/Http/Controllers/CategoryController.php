@@ -118,6 +118,6 @@ class CategoryController extends Controller
             $category->delete();
             return Redirect::back()->with('success','Xoá thành công');
         }
-        return Redirect::back()->with('success', 'Xoá thất bại');
+        return Redirect::back()->with('fail', 'Xoá thất bại');
     }
 }

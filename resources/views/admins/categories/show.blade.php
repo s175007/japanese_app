@@ -42,7 +42,7 @@
 @section('content')
     <div class="form">
         <div class="form__create">
-            <h1 class="form__title">{{ $category->name }}</h1>
+            <h1 class="form__title">Tên:{{ $category->name }}</h1>
             <td><img src="{{ Storage::url($category->icon) }}" class="img-fluid" alt="không tồn tại"></td>
         </div>
     </div>
