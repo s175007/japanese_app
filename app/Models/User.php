@@ -46,4 +46,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Saler');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->histories()->delete();
+        });
+    }
 }

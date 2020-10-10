@@ -31,4 +31,13 @@ class Exercise extends Model
     {
         return $this->hasMany('App\Models\Question');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($exercise) {
+            $exercise->questions()->delete();
+        });
+    }
 }

@@ -21,34 +21,51 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456')
         ]);
 
-        // DB::table('users')->insert([
-        //     'first_name' => 'Họ',
-        //     'last_name' => 'Tên',
-        //     'email' => "user@gmail.com",
-        //     'password' => Hash::make('123456')
-        // ]);
+        DB::table('users')->insert([
+            'first_name' => 'Họ',
+            'last_name' => 'Tên',
+            'email' => "user@gmail.com",
+            'password' => Hash::make('123456')
+        ]);
     
-        // DB::table('categories')->insert([
-        //     'id' => "1",
-        //     'name' => "みんなの日本語",
-        // ]);
+        DB::table('categories')->insert([
+            'id' => "1",
+            'name' => "みんなの日本語",
+        ]);
 
-        // DB::table('books')->insert([
-        //     'name' => "みんなの日本語　初級",
-        //     'category_id' => "1",
-        //     'img' => "",
-        // ]);
+        DB::table('categories')->insert([
+            'id' => "2",
+            'name' => "中級の日本語",
+        ]);
 
-        // DB::table('books')->insert([
-        //     'name' => "みんなの日本語　中級",
-        //     'category_id' => "1",
-        //     'img' => "",
-        // ]);
+        DB::table('books')->insert([
+            'name' => "みんなの日本語　初級",
+            'category_id' => "1",
+            'img' => "",
+        ]);
 
-        // DB::table('books')->insert([
-        //     'name' => "みんなの日本語　上級",
-        //     'category_id' => "1",
-        //     'img' => "",
-        // ]);
+        DB::table('books')->insert([
+            'name' => "みんなの日本語　中級",
+            'category_id' => "1",
+            'img' => "",
+        ]);
+
+        DB::table('books')->insert([
+            'name' => "みんなの日本語　上級",
+            'category_id' => "1",
+            'img' => "",
+        ]);
+
+        DB::table('books')->insert([
+            'name' => "中級の日本語 第一",
+            'category_id' => "2",
+            'img' => "",
+        ]);
+
+        DB::table('books')->insert([
+            'name' => "中級の日本語 第二",
+            'category_id' => "2",
+            'img' => "",
+        ]);
     }
 }

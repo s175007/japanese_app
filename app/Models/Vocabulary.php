@@ -33,4 +33,13 @@ class Vocabulary extends Model
     {
         return $this->hasMany('App\Models\VcbExample');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($vocabulary) {
+            $vocabulary->vcbExamples()->delete();
+        });
+    }
 }

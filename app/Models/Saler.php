@@ -38,4 +38,13 @@ class Saler extends Authenticatable
     {
         return $this->hasMany('App\Models\User');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($saler) {
+            $saler->users()->delete();
+        });
+    }
 }

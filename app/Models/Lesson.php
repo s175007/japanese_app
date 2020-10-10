@@ -58,4 +58,33 @@ class Lesson extends Model
     {
         return $this->hasMany('App\Models\Conversation');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($lesson) {
+            $lesson->grammars()->delete();
+        });
+
+        static::deleting(function ($lesson) {
+            $lesson->vocabularies()->delete();
+        });
+
+        static::deleting(function ($lesson) {
+            $lesson->kanjis()->delete();
+        });
+
+        static::deleting(function ($lesson) {
+            $lesson->exercises()->delete();
+        });
+
+        static::deleting(function ($lesson) {
+            $lesson->histories()->delete();
+        });
+
+        static::deleting(function ($lesson) {
+            $lesson->conversations()->delete();
+        });
+    }
 }
