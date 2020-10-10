@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('css')
     <style>
         .add__button {
@@ -30,8 +31,8 @@
         <h2>Danh sách quản lí Books</h2>
     </div>
     <div class="add__button">
-        {{-- <a href="{{ route('admin.books.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
-            category</a> --}}
+        <a href="{{ route('admin.books.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
+            Book</a>
         @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -64,13 +65,14 @@
                     <td><img src="{{ Storage::url($book->img) }}" class="img-fluid" alt="không tồn tại"></td>
                     <td>
                         <div class="row">
-                            {{-- <form method="POST" action="{{ route('admin.categories.destroy', ['category' => $category]) }}">
+                            <form method="POST"
+                                action="{{ route('admin.books.destroy', ['book' => $book]) }}">
 
-                                <a href="{{ route('admin.categories.show', $category->id) }}" title="show">
+                                <a href="{{ route('admin.books.show', $book->id) }}" title="show">
                                     <i class="fas fa-eye fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
-                                <a href="{{ route('admin.categories.edit', $category->id) }}">
+                                <a href="{{ route('admin.books.edit', $book->id) }}">
                                     <i class="fas fa-edit fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
@@ -80,7 +82,7 @@
                                 <button type="submit" title="delete" style="border: none; background-color:transparent;">
                                     <i class="fas fa-trash fa-lg" style="color: #A9A9A9"></i>
                                 </button>
-                            </form> --}}
+                            </form>
                         </div>
                     </td>
                 </tr>

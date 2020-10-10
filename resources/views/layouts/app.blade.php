@@ -18,6 +18,14 @@
             font-family: 'Nunito';
         }
 
+        .dashboard__title {
+            text-align: center;
+        }
+
+        .dashboard__button {
+            text-align: center;
+        }
+
     </style>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('icons/fontawesome-free-5.15.0-web/css/all.css') }}">
@@ -31,7 +39,15 @@
 <body>
     {{-- header --}}
     @include('layouts.menu')
-
+    @auth('admins')
+        <h3 class="dashboard__title">Danh sách quản lý các mục</h3>
+        <div class="dashboard__button">
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-light" role="button" aria-pressed="true">Dashboard</a>
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-light" role="button"
+                aria-pressed="true">Categories</a>
+            <a href="{{ route('admin.books.index') }}" class="btn btn-light" role="button" aria-pressed="true">Books</a>
+        </div>
+    @endauth
     {{-- body --}}
     @yield('content')
 

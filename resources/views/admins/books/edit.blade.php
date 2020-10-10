@@ -38,23 +38,16 @@
 @section('content')
     <div class="form">
         <div class="form__create">
-            <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.books.update' , ['book' => $book]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <select name="category_id" id="">
-                    @forelse ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @empty
-                        <option value="">Không tìm thấy</option>
-                    @endforelse
-                </select>
-
+                @method('PUT')
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
                     @error('name')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="">
+                placeholder="" value="{{$book->name}}">
                 </div>
 
 
@@ -66,7 +59,7 @@
                     <input type="file" name="image" class="form-control" id="exampleInputPassword1" placeholder="">
                 </div>
                 <div class="form__button">
-                    <button type="submit" class="btn btn-primary">Tạo</button>
+                    <button type="submit" class="btn btn-primary">Sửa</button>
                 </div>
             </form>
         </div>

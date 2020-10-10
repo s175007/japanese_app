@@ -22,6 +22,15 @@ class Book extends Model
         'category_id' => 'integer',
     ];
 
+    public static $create_rule = [
+        'name' => 'required|string',
+        'image' => 'required|file',
+    ];
+
+    public static $update_rule = [
+        'name' => 'required|string',
+    ];
+
     public function category(){
         return $this->belongsTo('App\Models\Category');
     }
@@ -36,7 +45,7 @@ class Book extends Model
         parent::boot();
 
         static::deleting(function ($book) {
-            $book->lessons->delete();
+            $book->lessons()->delete();
         });
     }
 }

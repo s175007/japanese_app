@@ -26,6 +26,7 @@
 @endsection
 
 @section('content')
+
     <div class="category__title">
         <h2>Danh sách quản lí Categories</h2>
     </div>

@@ -45,8 +45,8 @@ class CategoryController extends Controller
         
         $category = new Category();
         $category->name = $request->name;
-        $icon_name = Storage::disk('public')->put('icons', $request->file('icon'));
-        $category->icon = $icon_name;
+        $icon_path = Storage::disk('public')->put('icons', $request->file('icon'));
+        $category->icon = $icon_path;
         $category->save();
 
         return Redirect::route('admin.categories.index')->with('success','Tạo thành công');
@@ -93,15 +93,23 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
         if(!empty($category)){
+            //　Lưu tên
             $category->name = $request->name;
+
             if($request->hasFile('icon')){
-                $icon_name = Storage::disk('public')->put('icons', $request->file('icon'));
-                $category->icon = $icon_name;
+                //Xoá ảnh củ
+                Storage::disk('public')->delete($category->icon);
+                //Lưu ảnh mới
+                $icon_path = Storage::disk('public')->put('icons', $request->file('icon'));
+                $category->icon = $icon_path;
             }
             // return $category;
             $category->save();
+
+            return Redirect::route('admin.categories.index')->with('success', 'Cập nhật thành công');
         }
-        return Redirect::route('admin.categories.index')->with('success', 'Cập nhật thành công');
+
+        return Redirect::route('admin.categories.index')->with('fail', 'Cập nhật không thành công');
     }
 
     /**
