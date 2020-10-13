@@ -75,8 +75,14 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::find($id);
+        $categories = Category::all();
         // return $book;
-        return view('admins.books.edit')->with('book', $book);
+        if(!empty($book)){
+            return view('admins.books.edit')->with([
+                'book' => $book,
+                'categories' => $categories,
+            ]);
+        }
     }
 
     /**
@@ -97,6 +103,7 @@ class BookController extends Controller
         $book = Book::find($id);
         if (!empty($book)) {
             //　Lưu tên
+            $book->category_id = $request->category_id;
             $book->name = $request->name;
 
             if ($request->hasFile('image')) {

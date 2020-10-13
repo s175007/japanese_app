@@ -46,7 +46,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="">
+                        placeholder="" value="{{ old('name') }}">
                 </div>
 
 

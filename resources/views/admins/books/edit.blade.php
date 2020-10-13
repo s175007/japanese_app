@@ -38,16 +38,24 @@
 @section('content')
     <div class="form">
         <div class="form__create">
-            <form action="{{ route('admin.books.update' , ['book' => $book]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.books.update', ['book' => $book]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <select name="category_id" id="">
+                    @forelse ($categories as $category)
+                        <option value="{{ $category->id }}" {{ $category->id == $book->category_id ? 'selected' : '' }}>
+                            {{ $category->name }}</option>
+                    @empty
+                        <option value="">Không tìm thấy</option>
+                    @endforelse
+                </select>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
                     @error('name')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="" value="{{$book->name}}">
+                        placeholder="" value="{{ $book->name }}">
                 </div>
 
 

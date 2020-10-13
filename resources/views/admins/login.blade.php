@@ -51,7 +51,8 @@
                     @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    <input name="email" type="text" class="form-control login__input" placeholder="Enter email" id="email">
+                    <input name="email" type="text" class="form-control login__input" placeholder="Enter email" id="email"
+                        value="{{ old('email') }}">
                 </div>
                 <div class="form-group">
                     <label for="pwd">Mật khẩu</label>

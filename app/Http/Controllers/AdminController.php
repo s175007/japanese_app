@@ -10,16 +10,18 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
-    function returnViewLogin(){
-        if(Auth::guard('admins')->check()){
+    function returnViewLogin()
+    {
+        if (Auth::guard('admins')->check()) {
             return Redirect::route('admin.dashboard');
         }
         return view('admins.login');
     }
 
-    public function login(Request $request){
-        
-        Validator::make($request->all(),Administrator::$rule_login)->validate();
+    public function login(Request $request)
+    {
+
+        Validator::make($request->all(), Administrator::$rule_login)->validate();
 
         $credentials = $request->only('email', 'password');
 
@@ -28,19 +30,20 @@ class AdminController extends Controller
             return Redirect::route('admin.dashboard');
         }
 
-        return Redirect::route('admin.login')->withErrors(['logout' => 'Đăng nhập k thành công!!']);
-
+        return Redirect::route('admin.login')->withErrors(['logout' => 'Đăng nhập k thành công!!'])->withInput(['email' => $request->email]);
     }
 
-    function logout(){
-        if(Auth::guard('admins')->check()){
+    function logout()
+    {
+        if (Auth::guard('admins')->check()) {
             Auth::guard('admins')->logout();
-            return Redirect::route('admin.login')->with('success', 'Đăng xuất thành công!!'); 
+            return Redirect::route('admin.login')->with('success', 'Đăng xuất thành công!!');
         }
-        return redirect()->route('home')->withErrors(['logout'=>'Đăng xuất k thành công!!']);
+        return redirect()->route('home')->withErrors(['logout' => 'Đăng xuất k thành công!!']);
     }
 
-    function dashboard(){
+    function dashboard()
+    {
         return view('admins.dashboard');
     }
 }
