@@ -25,6 +25,7 @@ class Book extends Model
     public static $create_rule = [
         'name' => 'required|string',
         'image' => 'required|file',
+
     ];
 
     public static $update_rule = [
