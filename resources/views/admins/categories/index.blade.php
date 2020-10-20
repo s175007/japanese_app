@@ -22,6 +22,17 @@
             height: 50px;
         }
 
+        .pagination__link{
+            margin-bottom: 40px;
+        }
+        .pagination{
+            justify-content: center;
+        }
+        
+        .table{
+            margin-bottom: 0px;
+        }
+
     </style>
 @endsection
 
@@ -58,7 +69,10 @@
         <tbody>
             @forelse ($categories as $category)
                 <tr>
-                    <th scope="row">{{ $loop->index + 1 }}</th>
+                    {{--  --}}
+                    {{-- <th scope="row">{{ ($categories->count()) * (($categories->currentPage())-1) + ($loop->index + 1) }}</th> --}}
+                    <th scope="row">{{ $categories->firstItem() + $loop->index }}</th>
+
                     <td>{{ $category->name }}</td>
                     <td><img src="{{ Storage::url($category->icon) }}" class="img-fluid" alt="không tồn tại"></td>
                     <td>
@@ -88,4 +102,8 @@
             @endforelse
         </tbody>
     </table>
+    <div class="pagination__link">
+        {{ $categories->links('pagination::bootstrap-4') }}
+    </div>
+
 @endsection

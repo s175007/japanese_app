@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
 
 class CategoryController extends Controller
 {
+    private $getItemPerPage = 20;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate($this->getItemPerPage);
         // return $categories;
         return view('admins.categories.index')->with('categories', $categories);
     }

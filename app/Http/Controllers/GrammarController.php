@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class GrammarController extends Controller
 {
+    private $itemPerPage = 20;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +15,9 @@ class GrammarController extends Controller
      */
     public function index()
     {
-        //
+        $grammars = Grammar::with('lesson.book.category')->paginate($this->itemPerPage);
+
+        return view('admins.grammars.index', compact('grammars'));
     }
 
     /**

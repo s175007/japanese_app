@@ -23,16 +23,28 @@
             height: 50px;
         }
 
+        .pagination__link {
+            margin-bottom: 40px;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
     </style>
 @endsection
 
 @section('content')
     <div class="category__title">
-        <h2>Danh sách quản lí Books</h2>
+        <h2>Danh sách quản lí grammars</h2>
     </div>
     <div class="add__button">
-        <a href="{{ route('admin.books.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
-            Book</a>
+        <a href="{{ route('admin.grammars.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
+            grammar</a>
         @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -50,29 +62,34 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Category</th>
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Books Name</th>
+                <th scope="col">Lesson Name</th>
+                <th scope="col">Grammar Title</th>
+                <th scope="col">Grammar Mean</th>
+                <th scope="col">Grammar Using</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($books as $book)
+            @forelse ($grammars as $grammar)
                 <tr>
-                    <th scope="row">{{ $books->firstItem() + $loop->index }}</th>
-                    <td>{{ $book->category->name }}</td>
-                    <td>{{ $book->name }}</td>
-                    <td><img src="{{ Storage::url($book->img) }}" class="img-fluid" alt="không tồn tại"></td>
+                    <th scope="row">{{ $grammars->firstItem() + $loop->index }}</th>
+                    <td>{{ $grammar->lesson->book->category->name }}</td>
+                    <td>{{ $grammar->lesson->book->name }}</td>
+                    <td>{{ $grammar->lesson->name }}</td>
+                    <td>{{ $grammar->title }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($grammar->mean, 10, $end='...') }}</td>
+                    <td>{{ $grammar->using }}</td>
                     <td>
                         <div class="row">
-                            <form method="POST"
-                                action="{{ route('admin.books.destroy', ['book' => $book]) }}">
+                            <form method="POST" action="{{ route('admin.grammars.destroy', ['grammar' => $grammar]) }}">
 
-                                <a href="{{ route('admin.books.show', $book->id) }}" title="show">
+                                <a href="{{ route('admin.grammars.show', $grammar->id) }}" title="show">
                                     <i class="fas fa-eye fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
-                                <a href="{{ route('admin.books.edit', $book->id) }}">
+                                <a href="{{ route('admin.grammars.edit', $grammar->id) }}">
                                     <i class="fas fa-edit fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
@@ -87,8 +104,12 @@
                     </td>
                 </tr>
             @empty
-                <p>Không có Book nào</p>
+                <p>Không có grammar nào</p>
             @endforelse
         </tbody>
     </table>
+
+    <div class="pagination__link">
+        {{ $grammars->links('pagination::bootstrap-4') }}
+    </div>
 @endsection

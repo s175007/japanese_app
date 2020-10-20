@@ -46,6 +46,10 @@
             <a href="{{ route('admin.categories.index') }}" class="btn btn-light" role="button"
                 aria-pressed="true">Categories</a>
             <a href="{{ route('admin.books.index') }}" class="btn btn-light" role="button" aria-pressed="true">Books</a>
+            <a href="{{ route('admin.lessons.index') }}" class="btn btn-light" role="button" aria-pressed="true">Lessons</a>
+            <a href="{{ route('admin.grammars.index') }}" class="btn btn-light" role="button" aria-pressed="true">Grammars</a>
+
+
         </div>
     @endauth
     {{-- body --}}
