@@ -11,7 +11,7 @@
             margin: 20px;
         }
 
-        .category__title {
+        .vocabulary__title {
             text-align: center;
             text-decoration: none;
             margin: 40px;
@@ -22,16 +22,29 @@
             height: 50px;
         }
 
+        .pagination__link {
+            margin-bottom: 40px;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
     </style>
 @endsection
 
 @section('content')
-    <div class="category__title">
-        <h2>Danh sách quản lí Books</h2>
+
+    <div class="vocabulary__title">
+        <h2>Danh sách quản lí vocabularies</h2>
     </div>
     <div class="add__button">
-        <a href="{{ route('admin.books.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
-            Book</a>
+        <a href="{{ route('admin.vocabularies.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
+            vocabulary</a>
         @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -49,29 +62,42 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Category</th>
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
+                <th scope="col">Lesson Name</th>
+                <th scope="col">Kanji</th>
+                <th scope="col">Hiragana</th>
+                <th scope="col">Mean</th>
                 <th scope="col">Action</th>
+
+
             </tr>
         </thead>
         <tbody>
-            @forelse ($books as $book)
+            @forelse ($vocabularies as $vocabulary)
                 <tr>
-                    <th scope="row">{{ $books->firstItem() + $loop->index }}</th>
-                    <td>{{ $book->category->name }}</td>
-                    <td>{{ $book->name }}</td>
-                    <td><img src="{{ Storage::url($book->img) }}" class="img-fluid" alt="không tồn tại"></td>
+                    {{-- --}}
+                    {{-- <th scope="row">
+                        {{ $vocabularies->count() * ($vocabularies->currentPage() - 1) + ($loop->index + 1) }}</th>
+                    --}}
+                    <th scope="row">{{ $vocabularies->firstItem() + $loop->index }}</th>
+
+                    <td>
+                        @if (isset($vocabulary->lesson))
+                            {{ $vocabulary->lesson->name }}
+                        @endif
+                    </td>
+                    <td>{{ $vocabulary->kanji }}</td>
+                    <td>{{ $vocabulary->hiragana }}</td>
+                    <td>{{ $vocabulary->mean }}</td>
                     <td>
                         <div class="row">
                             <form method="POST"
-                                action="{{ route('admin.books.destroy', ['book' => $book]) }}">
+                                action="{{ route('admin.vocabularies.destroy', ['vocabulary' => $vocabulary]) }}">
 
-                                <a href="{{ route('admin.books.show', $book->id) }}" title="show">
+                                <a href="{{ route('admin.vocabularies.show', $vocabulary->id) }}" title="show">
                                     <i class="fas fa-eye fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
-                                <a href="{{ route('admin.books.edit', $book->id) }}">
+                                <a href="{{ route('admin.vocabularies.edit', $vocabulary->id) }}">
                                     <i class="fas fa-edit fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
@@ -86,8 +112,12 @@
                     </td>
                 </tr>
             @empty
-                <p>Không có Book nào</p>
+                <p>Không có vocabulary nào</p>
             @endforelse
         </tbody>
     </table>
+    <div class="pagination__link">
+        {{ $vocabularies->links('pagination::bootstrap-4') }}
+    </div>
+
 @endsection

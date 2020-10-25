@@ -77,27 +77,47 @@ class Lesson extends Model
         parent::boot();
 
         static::deleting(function ($lesson) {
-            $lesson->grammars()->delete();
+            // $lesson->grammars()->delete();
+            foreach ($lesson->grammars as $grammar) {
+                $grammar->lesson_id = null;
+                $grammar->save();
+            }
         });
 
         static::deleting(function ($lesson) {
-            $lesson->vocabularies()->delete();
+            // $lesson->vocabularies()->delete();
+            foreach ($lesson->vocabularies as $vocabulary) {
+                $vocabulary->lesson_id = null;
+                $vocabulary->save();
+            }
         });
 
         static::deleting(function ($lesson) {
-            $lesson->kanjis()->delete();
+            // $lesson->kanjis()->delete();
+            foreach ($lesson->kanjis as $kanji) {
+                $kanji->delete();
+            }
         });
 
         static::deleting(function ($lesson) {
-            $lesson->exercises()->delete();
+            // $lesson->exercises()->delete();
+            foreach ($lesson->exercises as $exercise) {
+                $exercise->delete();
+            }
         });
 
         static::deleting(function ($lesson) {
-            $lesson->histories()->delete();
+            // $lesson->histories()->delete();
+            foreach ($lesson->histories as $history) {
+                $history->delete();
+            }
         });
 
         static::deleting(function ($lesson) {
-            $lesson->conversations()->delete();
+            // $lesson->conversations()->delete();
+            foreach ($lesson->conversations as $conversation) {
+                $conversation->delete();
+            }
         });
     }
 }

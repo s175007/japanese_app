@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\LessonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('categories/{category_id}/books', [BookController::class, 'getBooksByCategoryId']);
+
+Route::get('books/{book_id}/lessons', [LessonController::class, 'getLessonsByBookId']);

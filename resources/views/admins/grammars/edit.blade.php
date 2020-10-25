@@ -38,45 +38,53 @@
 @section('content')
     <div class="form">
         <div class="form__create">
-            <form action="{{ route('admin.lessons.update', ['lesson' => $lesson]) }}" method="POST"
+            <form action="{{ route('admin.grammars.update', ['grammar' => $grammar]) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <label for="exampleInputEmail1">Chọn Books</label>
-                <select name="book_id" class="form-control">
-                    @forelse ($books as $book)
-                        <option value="{{ $book->id }}" {{ $book->id == $lesson->book_id ? 'selected' : '' }}>
-                            {{ $book->name }}
+                <label for="exampleInputEmail1">Chọn Lesson</label>
+
+                <select name="lesson_id" class="form-control">
+                    @forelse ($lessons as $lesson)
+                        {{-- <option value="{{ $lesson->id }}">{{ $lesson->name }}</option>
+                        --}}
+
+                        <option value="{{ $lesson->id }}" {{ $lesson->id == $grammar->lesson_id ? 'selected' : '' }}>
+                            {{ $lesson->name }}
                         </option>
+
+
                     @empty
                         <option value="">Không tìm thấy</option>
                     @endforelse
                 </select>
+
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
-                    @error('name')
+                    <label for="exampleInputEmail1">Title</label>
+                    @error('title')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="" value="{{ $lesson->name }}">
+                    <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby=""
+                        placeholder="" value="{{ $grammar->title }}">
                 </div>
 
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Image</label>
-                    @error('image')
+                    <label for="exampleInputPassword1">Mean</label>
+                    @error('mean')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    <input type="file" name="img" class="form-control" id="exampleInputPassword1" placeholder="">
+                    <input type="text" name="mean" class="form-control" id="exampleInputEmail1" aria-describedby=""
+                        placeholder="" value="{{ $grammar->mean }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Description</label>
-                    @error('description')
+                    <label for="exampleInputPassword1">Using</label>
+                    @error('using')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    <textarea type="file" name="description" class="form-control" id="exampleInputPassword1" placeholder=""
-                        value="{{ old('description') }}"></textarea>
+                    <textarea type="file" name="using" class="form-control" id="exampleInputPassword1"
+                        placeholder="">{{ $grammar->title }}</textarea>
                 </div>
 
                 <div class="form__button">

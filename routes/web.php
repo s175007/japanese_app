@@ -4,7 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GrammarController;
+use App\Http\Controllers\GrmExampleController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\VocabularyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,5 +44,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
         'books' => BookController::class,
         'lessons' => LessonController::class,
         'grammars' => GrammarController::class,
+        'grm-examples' => GrmExampleController::class,
+        'vocabularies' => VocabularyController::class,
     ]);
 });

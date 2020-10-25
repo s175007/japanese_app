@@ -24,6 +24,13 @@ class Vocabulary extends Model
         'lesson_id' => 'integer',
     ];
 
+    public static $create_rule = [
+        // 'lesson_id' => 'exists:lessons,id',
+        'kanji' => 'required|string',
+        'hiragana' => 'required|string',
+        'mean' => 'required|string',
+    ];
+
     public function lesson()
     {
         return $this->belongsTo('App\Models\Lesson');
@@ -39,7 +46,9 @@ class Vocabulary extends Model
         parent::boot();
 
         static::deleting(function ($vocabulary) {
-            $vocabulary->vcbExamples()->delete();
+            foreach ($vocabulary->vcbExamples as $vcbExample) {
+                $vcbExample->delete();
+            }
         });
     }
 }

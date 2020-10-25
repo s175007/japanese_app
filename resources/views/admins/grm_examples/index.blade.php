@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('css')
     <style>
         .add__button {
@@ -22,16 +23,28 @@
             height: 50px;
         }
 
+        .pagination__link {
+            margin-bottom: 40px;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
     </style>
 @endsection
 
 @section('content')
     <div class="category__title">
-        <h2>Danh sách quản lí Books</h2>
+        <h2>Danh sách quản lí grammars examples</h2>
     </div>
     <div class="add__button">
-        <a href="{{ route('admin.books.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
-            Book</a>
+        <a href="{{ route('admin.grm-examples.create') }}" class="btn btn-dark" role="button" aria-pressed="true">Thêm
+            grammar Example</a>
         @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -49,29 +62,34 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Category</th>
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Books Name</th>
+                <th scope="col">Lesson Name</th>
+                <th scope="col">Grammar Title</th>
+                <th scope="col">Japanese</th>
+                <th scope="col">Vietnamese</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($books as $book)
+            @forelse ($grm_examples as $grm_example)
                 <tr>
-                    <th scope="row">{{ $books->firstItem() + $loop->index }}</th>
-                    <td>{{ $book->category->name }}</td>
-                    <td>{{ $book->name }}</td>
-                    <td><img src="{{ Storage::url($book->img) }}" class="img-fluid" alt="không tồn tại"></td>
+                    <th scope="row">{{ $grm_examples->firstItem() + $loop->index }}</th>
+                    <td>{{ $grm_example->grammar->lesson->book->category->name }}</td>
+                    <td>{{ $grm_example->grammar->lesson->book->name }}</td>
+                    <td>{{ $grm_example->grammar->lesson->name }}</td>
+                    <td>{{ $grm_example->grammar->title }}</td>
+                    <td>{{ $grm_example->japanese }}</td>
+                    <td>{{ $grm_example->vietnamese }}</td>
                     <td>
                         <div class="row">
-                            <form method="POST"
-                                action="{{ route('admin.books.destroy', ['book' => $book]) }}">
+                            <form method="POST" action="{{ route('admin.grm-examples.destroy', ['grm_example' => $grm_example]) }}">
 
-                                <a href="{{ route('admin.books.show', $book->id) }}" title="show">
+                                <a href="{{ route('admin.grm-examples.show', $grm_example->id) }}" title="show">
                                     <i class="fas fa-eye fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
-                                <a href="{{ route('admin.books.edit', $book->id) }}">
+                                <a href="{{ route('admin.grm-examples.edit', $grm_example->id) }}">
                                     <i class="fas fa-edit fa-lg" style="color: #A9A9A9"></i>
                                 </a>
 
@@ -86,8 +104,12 @@
                     </td>
                 </tr>
             @empty
-                <p>Không có Book nào</p>
+                <p>Không có grammar nào</p>
             @endforelse
         </tbody>
     </table>
+
+    <div class="pagination__link">
+        {{ $grm_examples->links('pagination::bootstrap-4') }}
+    </div>
 @endsection

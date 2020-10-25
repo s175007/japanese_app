@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -32,7 +33,8 @@ class LessonController extends Controller
     public function create()
     {
         $books = Book::all();
-        return view('admins.lessons.create')->with('books', $books);
+        $categories = Category::all();
+        return view('admins.lessons.create')->with(['books' => $books, 'categories' => $categories]);
     }
 
     /**

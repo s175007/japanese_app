@@ -44,7 +44,9 @@ class Saler extends Authenticatable
         parent::boot();
 
         static::deleting(function ($saler) {
-            $saler->users()->delete();
+            foreach ($saler->users as $user) {
+                $user->delete();
+            }
         });
     }
 }

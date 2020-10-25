@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Category;
+use App\Models\Lesson;
 use App\Models\Vocabulary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class VocabularyController extends Controller
 {
+    private $itemPerPage = 20;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,9 @@ class VocabularyController extends Controller
      */
     public function index()
     {
-        //
+        $vocabularies = Vocabulary::with('lesson')->paginate($this->itemPerPage);
+        // return $vocabularies;
+        return view('admins.vocabularies.index',compact('vocabularies'));
     }
 
     /**
@@ -24,7 +32,10 @@ class VocabularyController extends Controller
      */
     public function create()
     {
-        //
+        $lessons = Lesson::all();
+        $books = Book::all();
+        $categories = Category::all();
+        return view('admins.vocabularies.create',compact('lessons', 'books', 'categories'));
     }
 
     /**
@@ -35,7 +46,19 @@ class VocabularyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), Vocabulary::$create_rule)->validate();
+
+        $vocabulary = new Vocabulary();
+
+        $vocabulary->lesson_id = $request->lesson_id;
+        $vocabulary->kanji = $request->kanji;
+        $vocabulary->hiragana = $request->hiragana;
+        $vocabulary->mean = $request->mean;
+
+        // return $vocabulary;
+        $vocabulary->save();
+
+        return Redirect::route('admin.vocabularies.index')->with('success', 'Tạo thành công');
     }
 
     /**

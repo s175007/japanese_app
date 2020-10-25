@@ -42,10 +42,12 @@
 @section('content')
     <div class="form">
         <div class="form__create">
-            <h1 class="form__title">Tên:{{ $lesson->name }}</h1>
-            <h2 class="form__title">Thuộc sách:{{ $lesson->book->name }}</h2>
-            <h2 class="form__title">Thuộc loại sách:{{ $lesson->book->category->name }}</h2>
-            {{-- <td><img src="{{ Storage::url($lesson->img) }}" class="img-fluid" alt="không tồn tại"></td> --}}
+            <h1 class="form__title">Tên Ngữ pháp:{{ $grammar->title }}</h1>
+            <h1 class="form__title">Nội dung Ngữ pháp:{{ $grammar->mean }}</h1>
+            <h1 class="form__title">Sử dụng Ngữ pháp:{{ $grammar->using }}</h1>
+            <h2 class="form__title">Thuộc Lesson:{{ $grammar->lesson->name }}</h2>
+            <h2 class="form__title">Thuộc Sách:{{ $grammar->lesson->book->name }}</h2>
+            <h2 class="form__title">Thuộc Category:{{ $grammar->lesson->book->category->name }}</h2>
         </div>
     </div>
 @endsection

@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grammar;
 use App\Models\GrmExample;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class GrmExampleController extends Controller
 {
+    private $itemPerPage = 20;
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,11 @@ class GrmExampleController extends Controller
      */
     public function index()
     {
-        //
+        $grm_examples = GrmExample::with('grammar.lesson.book.category')->paginate($this->itemPerPage);
+
+        // return $grm_examples;
+
+        return view('admins.grm_examples.index', compact('grm_examples'));
     }
 
     /**
@@ -24,7 +33,9 @@ class GrmExampleController extends Controller
      */
     public function create()
     {
-        //
+        $grammars = Grammar::all();
+        // return $categories;
+        return view('admins.grm_examples.create', compact('grammars'));
     }
 
     /**
@@ -35,7 +46,17 @@ class GrmExampleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), GrmExample::$create_rule)->validate();
+
+        $grm_examples = new GrmExample();
+
+        $grm_examples->grammar_id = $request->grammar_id;
+        $grm_examples->japanese = $request->japanese;
+        $grm_examples->vietnamese = $request->vietnamese;
+
+        $grm_examples->save();
+
+        return Redirect::route('admin.grm-examples.index')->with('success', 'Tạo thành công');
     }
 
     /**

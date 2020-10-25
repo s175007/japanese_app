@@ -45,7 +45,9 @@ class Kanji extends Model
         parent::boot();
 
         static::deleting(function ($kanji) {
-            $kanji->knjExamples()->delete();
+            foreach ($kanji->knjExamples as $knjExample) {
+                $knjExample->delete();
+            }
         });
     }
 }

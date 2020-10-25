@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grammar;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class GrammarController extends Controller
 {
@@ -27,7 +30,9 @@ class GrammarController extends Controller
      */
     public function create()
     {
-        //
+        $lessons = Lesson::all();
+        // return $categories;
+        return view('admins.grammars.create')->with('lessons', $lessons);
     }
 
     /**
@@ -38,7 +43,18 @@ class GrammarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), Grammar::$create_rule)->validate();
+
+        $grammar = new Grammar();
+
+        $grammar->lesson_id = $request->lesson_id;
+        $grammar->title = $request->title;
+        $grammar->mean = $request->mean;
+        $grammar->using = $request->using;
+
+        $grammar->save();
+
+        return Redirect::route('admin.grammars.index')->with('success', 'Tạo thành công');
     }
 
     /**
@@ -47,9 +63,11 @@ class GrammarController extends Controller
      * @param  \App\Models\Grammar  $grammar
      * @return \Illuminate\Http\Response
      */
-    public function show(Grammar $grammar)
+    public function show($id)
     {
-        //
+        $grammar = Grammar::with('lesson.book.category')->find($id);
+
+        return view('admins.grammars.show', compact('grammar'));
     }
 
     /**
@@ -58,9 +76,14 @@ class GrammarController extends Controller
      * @param  \App\Models\Grammar  $grammar
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grammar $grammar)
+    public function edit($id)
     {
-        //
+        $grammar = Grammar::find($id);
+        $lessons = Lesson::all();
+
+        if (!empty($grammar)) {
+            return view('admins.grammars.edit', compact('grammar','lessons'));
+        }
     }
 
     /**
@@ -70,9 +93,23 @@ class GrammarController extends Controller
      * @param  \App\Models\Grammar  $grammar
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grammar $grammar)
+    public function update(Request $request, $id)
     {
-        //
+        Validator::make($request->all(), Grammar::$create_rule)->validate();
+
+        $grammar = Grammar::find($id);
+        if (!empty($grammar)) {
+            $grammar->lesson_id = $request->lesson_id;
+            $grammar->title = $request->title;
+            $grammar->mean = $request->mean;
+            $grammar->using = $request->using;
+
+            $grammar->save();
+
+            return Redirect::route('admin.grammars.index')->with('success', 'Lưu thành công');
+        }
+
+        return Redirect::route('admin.grammars.index')->with('success', 'Lưu thất bại');
     }
 
     /**
@@ -81,8 +118,13 @@ class GrammarController extends Controller
      * @param  \App\Models\Grammar  $grammar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grammar $grammar)
+    public function destroy($id)
     {
-        //
+        $grammar = Grammar::find($id);
+        if (!empty($grammar)) {
+            $grammar->delete();
+            return Redirect::back()->with('success', 'Xoá thành công');
+        }
+        return Redirect::back()->with('fail', 'Xoá thất bại');
     }
 }

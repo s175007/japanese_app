@@ -22,6 +22,12 @@ class GrmExample extends Model
         'grammar_id' => 'integer',
     ];
 
+    public static $create_rule = [
+        'grammar_id' => 'exists:grammars,id',
+        'japanese' => 'required|string',
+        'vietnamese' => 'required|string',
+    ];
+
     public function grammar()
     {
         return $this->belongsTo('App\Models\Grammar');

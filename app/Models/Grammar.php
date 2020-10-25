@@ -24,12 +24,19 @@ class Grammar extends Model
         'lesson_id' => 'integer',
     ];
 
+    public static $create_rule = [
+        'lesson_id' => 'exists:lessons,id',
+        'title' => 'required|string',
+        'mean' => 'required|string',
+        'using' => 'required|string',
+    ];
+
     public function lesson()
     {
         return $this->belongsTo('App\Models\Lesson');
     }
 
-    public function GrmExamples()
+    public function grmExamples()
     {
         return $this->hasMany('App\Models\GrmExample');
     }
@@ -39,7 +46,10 @@ class Grammar extends Model
         parent::boot();
 
         static::deleting(function ($grammar) {
-            $grammar->GrmExamples()->delete();
+            // $grammar->grmExamples()->delete();
+            foreach ($grammar->grmExamples as $grmExample) {
+                $grmExample->delete();
+            }
         });
     }
 }

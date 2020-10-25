@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
+    private $itemPerPage = 20;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +19,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::with('category')->get();
+        $books = Book::with('category')->paginate($this->itemPerPage);
         return view('admins.books.index',['books' => $books]);
     }
 

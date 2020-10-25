@@ -41,7 +41,7 @@
             <form action="{{ route('admin.books.update', ['book' => $book]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <select name="category_id" id="">
+                <select name="category_id" class="form-control" >
                     @forelse ($categories as $category)
                         <option value="{{ $category->id }}" {{ $category->id == $book->category_id ? 'selected' : '' }}>
                             {{ $category->name }}</option>

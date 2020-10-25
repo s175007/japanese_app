@@ -46,7 +46,9 @@ class Book extends Model
         parent::boot();
 
         static::deleting(function ($book) {
-            $book->lessons()->delete();
+            foreach ($book->lessons as $lesson) {
+                $lesson->delete();
+            }
         });
     }
 }

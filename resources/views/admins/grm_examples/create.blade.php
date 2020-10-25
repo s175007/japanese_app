@@ -38,33 +38,37 @@
 @section('content')
     <div class="form">
         <div class="form__create">
-            <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.grm-examples.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <select name="category_id" class="form-control">
-                    @forelse ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <label for="exampleInputEmail1">Chọn Lesson</label>
+
+                <select name="grammar_id" class="form-control">
+                    @forelse ($grammars as $grammar)
+                        <option value="{{ $grammar->id }}">{{ $grammar->title }}</option>
                     @empty
                         <option value="">Không tìm thấy</option>
                     @endforelse
                 </select>
 
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Name</label>
-                    @error('name')
+                    <label for="exampleInputEmail1">Japanese</label>
+                    @error('japanese')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder=""  value="{{ old('name') }}">
+                    <input type="text" name="japanese" class="form-control" id="exampleInputEmail1" aria-describedby=""
+                        placeholder="" value="{{ old('japanese') }}">
                 </div>
 
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Image</label>
-                    @error('image')
+                    <label for="exampleInputPassword1">vietnamese</label>
+                    @error('vietnamese')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                    <input type="file" name="image" class="form-control" id="exampleInputPassword1" placeholder="">
+                    <input type="text" name="vietnamese" class="form-control" id="exampleInputEmail1" aria-describedby=""
+                        placeholder="" value="{{ old('vietnamese') }}">
                 </div>
+
                 <div class="form__button">
                     <button type="submit" class="btn btn-primary">Tạo</button>
                 </div>

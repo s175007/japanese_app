@@ -37,7 +37,9 @@ class Exercise extends Model
         parent::boot();
 
         static::deleting(function ($exercise) {
-            $exercise->questions()->delete();
+            foreach ($exercise->questions as $question) {
+                $question->delete();
+            }
         });
     }
 }
