@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GrammarController;
 use App\Http\Controllers\GrmExampleController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\VcbExampleController;
 use App\Http\Controllers\VocabularyController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,6 @@ Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login
 
 Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-
 Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
 
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -46,5 +46,6 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
         'grammars' => GrammarController::class,
         'grm-examples' => GrmExampleController::class,
         'vocabularies' => VocabularyController::class,
+        'vcb-examples' => VcbExampleController::class,
     ]);
 });

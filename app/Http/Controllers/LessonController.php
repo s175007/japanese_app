@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use SebastianBergmann\Environment\Console;
 
 class LessonController extends Controller
 {
@@ -19,10 +20,38 @@ class LessonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lessons = Lesson::with('book.category')->paginate($this->itemPerPage);
-        return view('admins.lessons.index', compact('lessons'));
+        // return $request->all();
+        if ($request->has('category_id')) {
+            $request->validate([
+                'book_id' => 'required',
+            ]);
+        }
+        $categories = Category::all();
+        $lessons = Lesson::with('book.category');
+
+        $arrPaging = array();
+
+        foreach ($request->all() as $key => $val) {
+            $arrPaging[$key] = $val;
+            
+            if ($key == "book_id") {
+                $lessons->where($key, $val);
+            }
+            if ($key == "name") {
+                $lessons->where($key, 'like', '%' . $val . '%');
+            }
+        }
+
+        $lessons = $lessons->paginate($this->itemPerPage);
+                
+        $lessons->appends(
+            $arrPaging
+        );
+        // return $lessons;
+
+        return view('admins.lessons.index', compact('lessons', 'categories'));
     }
 
     /**

@@ -20,6 +20,11 @@ class VcbExample extends Model
         'examples' => 'string',
     ];
 
+    public static $create_rule = [
+        'vocabulary_id' => 'exists:vocabularies,id',
+        'examples' => 'required|string',
+    ];
+
     public function vocabulary()
     {
         return $this->belongsTo('App\Models\Vocabulary');

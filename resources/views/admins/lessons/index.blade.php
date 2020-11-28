@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('js')
+<script src="{{ asset('js/book.js') }}"></script>
+@endsection
 
 @section('css')
     <style>
@@ -34,11 +37,50 @@
         .table {
             margin-bottom: 0px;
         }
+        .form__create {
+            margin: 50px;
+        }
 
     </style>
 @endsection
 
 @section('content')
+    <div class="form">
+        <div class="form__create">
+            <form action="{{ route('admin.lessons.index') }}" method="GET" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="category_id">Choose Categories</label>
+                    <select id="category_id" name="category_id" class="form-control">
+                        <option value="">Chọn category</option>
+                        @forelse ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @empty
+                            <option value="">Không tìm thấy</option>
+                        @endforelse
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    @error('book_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <label for="book_id">Choose Books</label>
+                    <select id="book_id" name="book_id" class="form-control">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Lesson Name</label>
+                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="" value="{{ old('name') }}">
+                </div>
+
+                <div class="form__button">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="category__title">
         <h2>Danh sách quản lí lessons</h2>
     </div>
@@ -78,7 +120,7 @@
                     <td>{{ $lesson->book->name }}</td>
                     <td>{{ $lesson->name }}</td>
                     <td><img src="{{ Storage::url($lesson->img) }}" class="img-fluid" alt="không tồn tại"></td>
-                    <td>{{ \Illuminate\Support\Str::limit($lesson->description, 20, $end='...') }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($lesson->description, 20, $end = '...') }}</td>
                     <td>
                         <div class="row">
                             <form method="POST" action="{{ route('admin.lessons.destroy', ['lesson' => $lesson]) }}">

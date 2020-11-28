@@ -54,8 +54,7 @@
             <a href="{{ route('admin.grammars.index') }}" class="btn btn-light" role="button" aria-pressed="true">Grammars</a>
             <a href="{{ route('admin.grm-examples.index') }}" class="btn btn-light" role="button" aria-pressed="true">Grammars Ex</a>
             <a href="{{ route('admin.vocabularies.index') }}" class="btn btn-light" role="button" aria-pressed="true">Vocabulary</a>
-
-
+            <a href="{{ route('admin.vcb-examples.index') }}" class="btn btn-light" role="button" aria-pressed="true">Vocabulary Ex</a>
 
         </div>
     @endauth

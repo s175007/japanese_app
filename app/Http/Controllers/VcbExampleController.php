@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\VcbExample;
+use App\Models\Vocabulary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class VcbExampleController extends Controller
 {
+    private $itemPerPage = 20;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,8 @@ class VcbExampleController extends Controller
      */
     public function index()
     {
-        //
+        $vcb_examples = VcbExample::with('vocabulary')->paginate($this->itemPerPage);
+        return view('admins.vcb_examples.index',compact('vcb_examples'));
     }
 
     /**
@@ -24,7 +29,11 @@ class VcbExampleController extends Controller
      */
     public function create()
     {
-        //
+        $vocabularies = Vocabulary::all();
+
+        // return $vocabularies;
+
+        return view('admins.vcb_examples.create',compact('vocabularies'));
     }
 
     /**
@@ -35,7 +44,16 @@ class VcbExampleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), VcbExample::$create_rule)->validate();
+        
+        $vcb_examples = new VcbExample();
+        $vcb_examples->vocabulary_id = $request->vocabulary_id;
+        $vcb_examples->examples = $request->examples;
+
+        $vcb_examples->save();
+
+        return Redirect::route('admin.vcb-examples.index')->with('success', 'Tạo thành công');
+
     }
 
     /**

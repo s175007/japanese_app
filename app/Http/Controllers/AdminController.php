@@ -21,7 +21,9 @@ class AdminController extends Controller
     public function login(Request $request)
     {
 
-        Validator::make($request->all(), Administrator::$rule_login)->validate();
+        // Validator::make($request->all(), Administrator::$rule_login)->validate();
+
+        $request->validate(Administrator::$rule_login);
 
         $credentials = $request->only('email', 'password');
 
